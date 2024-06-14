@@ -10,11 +10,8 @@ class SavedScreen extends StatefulWidget {
 class _SavedScreenState extends State<SavedScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Saved"),
-      ),
-      body: const Text("Saved"),
+    return const Scaffold(
+      body: Text("Saved"),
     );
   }
 }
