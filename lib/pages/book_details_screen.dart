@@ -57,9 +57,45 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                   ),
                 ],
               ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text('Saved'),
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(Icons.favorite),
+                      label: const Text('Favorite'),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(
+                height: 30,
+              ),
+              Text(
+                "Description",
+                style: textTheme.headlineSmall,
+              ),
               if (book.description.isNotEmpty)
-                Padding(
+                Container(
                   padding: const EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .secondary
+                        .withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: Text(
                     book.description,
                     style: textTheme.bodyLarge,
