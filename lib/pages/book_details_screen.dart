@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:reader_tracker/models/book.dart';
+import 'package:reader_tracker/utils/book_details_arguements.dart';
 
 class BookDetailsScreen extends StatefulWidget {
   const BookDetailsScreen({super.key});
@@ -10,11 +12,15 @@ class BookDetailsScreen extends StatefulWidget {
 class _BookDetailsScreenState extends State<BookDetailsScreen> {
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as BookDetailsArguements;
+    final Book book = args.itemBook;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Book Details"),
       ),
-      body: const Text("BookDetailsScreen"),
+      body: Text(book.title),
     );
   }
 }
