@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reader_tracker/pages/book_details_screen.dart';
 import 'package:reader_tracker/pages/favorites_screen.dart';
 import 'package:reader_tracker/pages/home_screen.dart';
 import 'package:reader_tracker/pages/saved_screen.dart';
@@ -20,6 +21,13 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MyHomePage(),
+      initialRoute: '/',
+      routes: {
+        '/home': (context) => const HomeScreen(),
+        '/saved': (context) => const SavedScreen(),
+        '/favorites': (context) => const FavoritesScreen(),
+        '/book_details': (context) => const BookDetailsScreen(),
+      },
       debugShowCheckedModeBanner: false,
     );
   }
