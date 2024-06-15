@@ -102,13 +102,14 @@ class GridViewWidget extends StatelessWidget {
               },
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Image.network(
-                      book.imageLinks['thumbnail']!,
-                      height: 200,
+                  if (book.imageLinks.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.network(
+                        book.imageLinks['thumbnail']!,
+                        height: 200,
+                      ),
                     ),
-                  ),
                   const SizedBox(height: 10),
                   Text(
                     book.title,
