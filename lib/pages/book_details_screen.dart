@@ -82,8 +82,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                     ElevatedButton.icon(
                       onPressed: () async {
                         try {
-                          await DatabaseHelper.instance.readAllBooks().then(
-                                (value) => Navigator.pop(context, value),
+                          await DatabaseHelper.instance
+                              .toggleFavoriteStatus(
+                                book.id,
+                                book.isFavorite,
+                              )
+                              .then(
+                                (value) => print("Print BValue $value"),
                               );
                         } catch (e) {
                           print('error: $e');

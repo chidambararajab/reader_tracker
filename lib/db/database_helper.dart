@@ -34,6 +34,7 @@ class DatabaseHelper {
         id TEXT PRIMARY KEY,
         title TEXT NOT NULL,
         authors TEXT NOT NULL,
+        favorite INTEGER DEFAULT 0,
         publisher TEXT,
         publishedDate TEXT,
         description TEXT,
@@ -58,5 +59,15 @@ class DatabaseHelper {
     return books.isNotEmpty
         ? books.map((book) => Book.fromJsonDatabase(book)).toList()
         : [];
+  }
+
+  Future<int> toggleFavoriteStatus(String id, bool isFavorite) async {
+    Database db = await instance.database;
+    return await db.update(
+      _tableName,
+      {'favorite': isFavorite ? 1 : 0},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }
