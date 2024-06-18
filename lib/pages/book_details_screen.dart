@@ -15,6 +15,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
   Widget build(BuildContext context) {
     final args =
         ModalRoute.of(context)?.settings.arguments as BookDetailsArguements;
+    final bool isFromSavedScreen = args.isFromSavedScreen;
     final Book book = args.itemBook;
     final textTheme = Theme.of(context).textTheme;
 
@@ -64,39 +65,42 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    ElevatedButton(
-                      onPressed: () async {
-                        try {
-                          // Save a book in database using insert method in DatabaseHelper.
-                          await DatabaseHelper.instance.insert(book);
-                          SnackBar snackBar = SnackBar(
-                            content: Text("Book Saved: ${book.title}"),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        } catch (e) {
-                          print('error: ${e.toString()}');
-                        }
-                      },
-                      child: const Text('Saved'),
-                    ),
-                    ElevatedButton.icon(
-                      onPressed: () async {
-                        try {
-                          await DatabaseHelper.instance
-                              .toggleFavoriteStatus(
-                                book.id,
-                                book.isFavorite,
-                              )
-                              .then(
-                                (value) => print("Print BValue $value"),
-                              );
-                        } catch (e) {
-                          print('error: $e');
-                        }
-                      },
-                      icon: const Icon(Icons.favorite),
-                      label: const Text('Favorite'),
-                    ),
+                    if (!isFromSavedScreen)
+                      ElevatedButton(
+                        onPressed: () async {
+                          try {
+                            // Save a book in database using insert method in DatabaseHelper.
+                            await DatabaseHelper.instance.insert(book);
+                            SnackBar snackBar = SnackBar(
+                              content: Text("Book Saved: ${book.title}"),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          } catch (e) {
+                            print('error: ${e.toString()}');
+                          }
+                        },
+                        child: const Text('Saved'),
+                      ),
+                    if (isFromSavedScreen)
+                      ElevatedButton.icon(
+                        onPressed: () async {
+                          try {
+                            await DatabaseHelper.instance
+                                .toggleFavoriteStatus(
+                                  book.id,
+                                  !book.isFavorite,
+                                )
+                                .then(
+                                  (value) => print("Print BValue $value"),
+                                );
+                          } catch (e) {
+                            print('error: $e');
+                          }
+                        },
+                        icon: const Icon(Icons.favorite),
+                        label: const Text('Favorite'),
+                      ),
                   ],
                 ),
               ),
