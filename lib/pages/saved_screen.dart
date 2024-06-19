@@ -63,23 +63,34 @@ class _SavedScreenState extends State<SavedScreen> {
                               children: [
                                 Text(book.authors.join(", & ")),
                                 ElevatedButton.icon(
-                                    onPressed: () async {
-                                      try {
-                                        await DatabaseHelper.instance
-                                            .toggleFavoriteStatus(
-                                              book.id,
-                                              !book.isFavorite,
-                                            )
-                                            .then(
-                                              (value) =>
-                                                  print("Print BValue $value"),
-                                            );
-                                      } catch (e) {
-                                        print('error: $e');
-                                      }
-                                    },
-                                    icon: const Icon(Icons.favorite_outline),
-                                    label: const Text("Add To Favorites")),
+                                  onPressed: () async {
+                                    try {
+                                      book.isFavorite = !book.isFavorite;
+                                      await DatabaseHelper.instance
+                                          .toggleFavoriteStatus(
+                                            book.id,
+                                            book.isFavorite,
+                                          )
+                                          .then(
+                                            (value) =>
+                                                print("Print BValue $value"),
+                                          );
+                                      setState(() {});
+                                    } catch (e) {
+                                      print('error: $e');
+                                    }
+                                  },
+                                  icon: Icon(
+                                    book.isFavorite == true
+                                        ? Icons.favorite
+                                        : Icons.favorite_outline,
+                                  ),
+                                  label: Text(
+                                    book.isFavorite == true
+                                        ? "Remove Favorite"
+                                        : "Add Favorites",
+                                  ),
+                                ),
                               ],
                             ),
                           ),

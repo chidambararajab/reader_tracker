@@ -34,7 +34,24 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                         child: ListTile(
                           minVerticalPadding: 12,
                           title: Text(book.title),
-                          trailing: const Icon(Icons.remove_circle),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.remove_circle),
+                            onPressed: () async {
+                              try {
+                                await DatabaseHelper.instance
+                                    .toggleFavoriteStatus(
+                                      book.id,
+                                      !book.isFavorite,
+                                    )
+                                    .then(
+                                      (value) => print("Print BValue $value"),
+                                    );
+                                setState(() {});
+                              } catch (e) {
+                                print('error: $e');
+                              }
+                            },
+                          ),
                           leading: Image.network(
                             book.imageLinks['thumbnail'] ?? "",
                             fit: BoxFit.cover,
